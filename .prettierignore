@@ -1,0 +1,15 @@
+*.md
+**/*.md
+
+.circleci/
+.github/
+.vscode/
+
+node_modules
+dist/
+lib/
+lib-es/
+es/
+logs/
+logs-meta/
+.eslintcache/

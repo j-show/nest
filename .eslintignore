@@ -1,0 +1,12 @@
+node_modules
+
+storage/
+.eslintcache/
+
+packages/**/__snapshots__
+packages/*/lib
+packages/*/lib-es
+packages/*/es
+
+docker/playground
+

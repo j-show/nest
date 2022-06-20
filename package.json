@@ -1,0 +1,80 @@
+{
+  "name": "@jshow/nest-modules",
+  "private": true,
+  "homepage": "https://github.com/j-show/nest-modules",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/j-show/nest-modules.git"
+  },
+  "bugs": {
+    "url": "https://github.com/j-show/nest-modules/issues"
+  },
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "precommit": "lint-staged",
+    "clean": "rimraf packages/**/lib && rimraf packages/**/lib-es && find packages -maxdepth 1 -empty -type d -delete",
+    "deps:check": "ts-node -T scripts/explicit-deps --check-only",
+    "deps:fix": "ts-node -T scripts/explicit-deps",
+    "release": "ts-node -T scripts/release",
+    "build:all": "ts-node -T scripts/build-all",
+    "build:update": "ts-node -T scripts/build-update",
+    "sync-to-node-modules": "ts-node -T scripts/sync-to-node-modules",
+    "create:pkg": "ts-node -T scripts/create-pkg"
+  },
+  "devDependencies": {
+    "@jshow/logger": "^1.0.1",
+    "@types/inquirer": "^8.2.1",
+    "@types/jest": "^27.5.1",
+    "@types/lodash": "^4.14.182",
+    "@types/mkdirp": "^1.0.2",
+    "@types/node": "^17.0.33",
+    "@types/prettier": "^2.6.1",
+    "@types/readdir-enhanced": "^3.0.2",
+    "@types/rimraf": "^3.0.2",
+    "@types/semver": "^7.3.10",
+    "@types/shelljs": "^0.8.11",
+    "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "common-tags": "^1.8.2",
+    "eslint": "^8.15.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-eslint-plugin": "^4.1.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jshow": "^1.0.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "husky": "^8.0.1",
+    "immer": "^9.0.15",
+    "inquirer": "^9.0.0",
+    "jest": "^28.1.0",
+    "lint-staged": "^12.4.1",
+    "lodash": "^4.17.21",
+    "mkdirp": "^1.0.4",
+    "mocha": "^10.0.0",
+    "prettier": "^2.6.2",
+    "readdir-enhanced": "^6.0.4",
+    "rimraf": "^3.0.2",
+    "semver": "^7.3.7",
+    "shelljs": "^0.8.5",
+    "shx": "^0.3.4",
+    "standard": "^17.0.0",
+    "ts-import-plugin": "^2.0.0",
+    "ts-jest": "^28.0.2",
+    "ts-node": "^10.7.0",
+    "type-coverage": "^2.21.1",
+    "typescript": "^4.6.4",
+    "uuid": "^8.3.2"
+  },
+  "standard": {
+    "ignore": ["lib", "lib-es", "__snapshots__"]
+  },
+  "lint-staged": {
+    "*.ts11": ["prettier --parser=typescript --write", "ts-node scripts/run-lint-in-workspace", "git add"],
+    "*.js": ["standard --fix", "git add"],
+    "*.md": ["prettier --parser=markdown --write", "git add"],
+    "*.json": ["prettier --parser=json --write", "git add"]
+  }
+}

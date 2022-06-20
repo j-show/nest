@@ -1,0 +1,6 @@
+.git
+.vscode
+.nuxt
+.next
+node_modules
+Dockerfile
