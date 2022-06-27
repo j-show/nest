@@ -7,7 +7,7 @@ import { packagesFullPath, readPackageJson } from './build';
 import { copyFiles, exists, mkdirp, run } from './helper';
 
 type Arguments = yargs.Arguments & {
-  readonly name: string;
+  readonly _: string[];
   readonly desc?: string;
   readonly force?: boolean;
 };
@@ -15,13 +15,6 @@ type Arguments = yargs.Arguments & {
 if (require.main === module) {
   const argv = yargs
     .strict()
-    .alias('n', 'name')
-    .option('name', {
-      type: 'string',
-      nargs: 1,
-      demandOption: true,
-      describe: 'Package name',
-    })
     .alias('d', 'desc')
     .option('desc', {
       type: 'string',
@@ -40,7 +33,8 @@ if (require.main === module) {
     .alias('h', 'help')
     .parse();
 
-  const { name, desc, force } = argv as Arguments;
+  const { _, desc, force } = argv as Arguments;
+  const name = (_[0] || '').toString();
 
   run(async () => {
     return await main({ name, desc, force });
@@ -56,8 +50,8 @@ interface MainOptions {
 async function main(options: MainOptions) {
   const { name, desc, force } = options;
 
-  if (!name) {
-    return console.info('package name cannot empty');
+  if (!name || /^\d+$/.test(name)) {
+    return console.info('package name cannot be empty or purely numeric');
   }
 
   if (/[\^/\\]/.test(name)) {
