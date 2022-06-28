@@ -58,7 +58,7 @@ async function main(options: MainOptions) {
     return console.info(`pacakge name cannot contain '^', '\\', '/'`);
   }
 
-  const fileNames = (await fs.promises.readdir(packagesFullPath)).filter((x) => !x.match(/^\./));
+  const fileNames = (await fs.promises.readdir(packagesFullPath)).filter((x) => !['.DS_Store', '.', '..'].includes(x));
   const packageDirPath = path.join(packagesFullPath, name);
   const packageVersion = new Map<string, string>();
 
@@ -67,6 +67,7 @@ async function main(options: MainOptions) {
       const packageDirName = path.join(packagesFullPath, fileName);
       const stat = await fs.promises.stat(packageDirName);
       if (!stat.isDirectory()) return;
+
       const packageJsonPath = path.join(packageDirName, 'package.json');
       if (!(await exists(packageJsonPath))) return;
 
@@ -85,7 +86,7 @@ async function main(options: MainOptions) {
   await mkdirp(packageDirPath);
 
   const templateDirPath = path.join(__dirname, '../template');
-  await copyFiles(templateDirPath, packageDirPath, { deep: true });
+  await copyFiles(templateDirPath, packageDirPath, { deep: true, allFile: true });
 
   const packageJsonPath = path.join(packageDirPath, 'package.json');
   if (!(await exists(packageJsonPath))) return;
