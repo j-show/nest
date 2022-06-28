@@ -5,7 +5,7 @@ import { Module } from '@nestjs/core/injector/module';
 import commander from 'commander';
 import { get, sortBy } from 'lodash';
 
-import { Constructor } from '@jshow/nest-common';
+import { Constructor, NestLogger } from '@jshow/nest-common';
 
 import {
   ArgumentMetaInfo,
@@ -17,13 +17,13 @@ import {
   META_MODULE_COMMANDS,
   OptionMetaInfo,
 } from './decorators';
-import { ConsoleRunOptions, Logger } from './defines';
+import { ConsoleRunOptions } from './defines';
 
 @Injectable()
 export class ConsoleService {
   private readonly instanceLoader = new Injector();
   private callback?: Function;
-  private logger?: Logger;
+  private logger?: NestLogger;
 
   constructor(
     protected readonly modulesContainer: ModulesContainer,

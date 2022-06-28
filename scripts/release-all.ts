@@ -17,7 +17,7 @@ import {
   readPackageJson,
   resolveTopologicalSorting,
   scope,
-} from '../build';
+} from './build';
 import {
   aggregateDeps,
   confirm,
@@ -31,10 +31,9 @@ import {
   predicate,
   run,
   select,
-} from '../helper';
-
-import { getSuffixByGitFlow } from './branch';
-import { getPackageJsonAtCommit, getPackagePublishInfo, getPackageYarnInfo, getPublishInfo } from './common';
+} from './helper';
+import { getSuffixByGitFlow } from './release/branch';
+import { getPackageJsonAtCommit, getPackagePublishInfo, getPackageYarnInfo, getPublishInfo } from './release/common';
 
 type Arguments = yargs.Arguments & {
   readonly noPush?: boolean;

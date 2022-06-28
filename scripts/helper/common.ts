@@ -227,20 +227,41 @@ export function readFileSafeSync(filePath: string) {
 export async function copyFiles(
   sourceDir: string,
   targetDir: string,
-  params: { deep?: boolean; files?: string[] } = {},
+  params: { deep?: boolean; allFile?: boolean; files?: string[] } = {},
 ) {
-  const { deep = false, files = (await fs.promises.readdir(sourceDir)).filter((x) => !x.match(/^\./)) } = params;
+  const {
+    deep = false,
+    allFile = false,
+    files = (await fs.promises.readdir(sourceDir)).filter((x) =>
+      allFile ? !['.DS_Store', '.', '..'].includes(x) : !x.match(/^\./),
+    ),
+  } = params;
+
+  const realFiles = files
+    .map((x) => path.relative(sourceDir, path.resolve(sourceDir, x)))
+    .filter((x) => !x.startsWith('../'));
 
   await Promise.all(
-    files.map(async (filePath) => {
+    realFiles.map(async (filePath) => {
       const sourceFilePath = path.join(sourceDir, filePath);
       const targetFilePath = path.join(targetDir, filePath);
       const stat = await fs.promises.stat(sourceFilePath);
 
       if (stat.isDirectory()) {
         if (!deep) return;
+
+        const hasOtherFiles = realFiles.some((x) => {
+          const _x = path.join(sourceDir, x);
+          if (_x === sourceFilePath) return false;
+          return !path.relative(sourceFilePath, _x).startsWith('../');
+        });
+        if (hasOtherFiles) return;
+
         await mkdirp(targetFilePath);
-        await copyFiles(sourceFilePath, targetFilePath, { deep });
+        await copyFiles(sourceFilePath, targetFilePath, {
+          deep,
+          allFile,
+        });
         return;
       }
 

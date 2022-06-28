@@ -1,12 +1,15 @@
 {
-  "name": "@jshow/nest-console",
+  "name": "@jshow/nest-logger",
   "license": "MIT",
   "version": "1.0.1",
-  "description": "jShow Nest Console for Next.js",
+  "description": "jShow Nest Logger",
   "main": "lib/index.js",
   "module": "lib-es/index.js",
   "types": "lib/index.d.ts",
-  "files": ["lib", "lib-es"],
+  "files": [
+    "lib",
+    "lib-es"
+  ],
   "scripts": {
     "build": "ts-node -T ../../scripts/build-self.ts",
     "postbuild": "eval \"cd ../.. && yarn build:update ${PWD##*/}\"",
@@ -19,11 +22,16 @@
     "@jshow/logger": "^1.0.1",
     "@jshow/nest-common": "^1.0.1",
     "@nestjs/common": "^8.4.7",
-    "@nestjs/core": "^8.4.7",
+    "chalk": "^5.0.1",
+    "debug": "^4.3.4",
     "lodash": "^4.17.21",
-    "reflect-metadata": "^0.1.13"
+    "moment": "^2.29.3",
+    "prettyjson": "^1.2.5",
+    "strip-ansi": "^7.0.1"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.182"
+    "@types/debug": "^4.1.7",
+    "@types/lodash": "^4.14.182",
+    "@types/prettyjson": "^0.0.30"
   }
 }
