@@ -10,7 +10,6 @@ import yargs from 'yargs';
 
 import {
   dependencyKeys,
-  filterTopologicalSorting,
   PackageJson,
   packagesFullPath,
   POSSIBLE_SOURCE_FOLDER_NAME,
@@ -62,28 +61,23 @@ if (require.main === module) {
 
   const { noPush, all } = argv as Arguments;
 
-  Promise.resolve().then(() =>
-    run(async () => {
-      const branchName = await getCurrentBranchName();
+  run(async () => {
+    const branchName = await getCurrentBranchName();
+    const packageSuffix = getSuffixByGitFlow(branchName);
 
-      const packageSuffix = getSuffixByGitFlow(branchName);
-
-      return main({ noPush, all, packageSuffix });
-    }),
-  );
+    return main({ noPush, all, packageSuffix });
+  });
 }
 
-export interface MainOptions {
+interface MainOptions {
   readonly noPush?: boolean;
   readonly all?: boolean;
   readonly packageSuffix?: string;
 }
 
-export async function main(options?: MainOptions) {
-  const noPush = Boolean(options && options.noPush);
-
-  const packageSuffix = String((options && options.packageSuffix) || '');
-
+export async function main(options: MainOptions = {}) {
+  const noPush = !!options.noPush;
+  const packageSuffix = String(options.packageSuffix || '');
   const printer = new Printer();
 
   const { message, ignoreFilters } = getPublishInfo();
@@ -147,6 +141,7 @@ export async function main(options?: MainOptions) {
   const packageDeps = new Map<string, Set<string>>();
   for (const packageName of allPackageNames) {
     const { deps, externalModules } = readPackageJson(packageJsonMap[packageName]);
+
     packageDeps.set(packageName, deps);
     if (externalModules) {
       for (const m of externalModules) externalPackages.add(m);
@@ -301,8 +296,6 @@ export async function main(options?: MainOptions) {
       );
     }),
   );
-
-  filterTopologicalSorting(packageDeps);
 
   // 构建所有包原始名的拓扑排序数组
   const packageNamesInTopologicalOrder = Array.from(resolveTopologicalSorting(packageDeps));
@@ -672,7 +665,7 @@ function askForGreaterVersionThanVersion(version: string, existed?: ReadonlySet<
 }
 
 async function getBranchStatus() {
-  const result = await exec('git status -uno', { silent: true });
+  const result = await exec('LANG=en_GB git status -uno', { silent: true });
   if (result.indexOf(`have diverged`) >= 0) {
     // 同时拥有 ahead 和 behind
     // Your branch and 'origin/master' have diverged,

@@ -1,15 +1,12 @@
 {
   "name": "@jshow/nest-logger",
   "license": "MIT",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "jShow Nest Logger",
   "main": "lib/index.js",
   "module": "lib-es/index.js",
   "types": "lib/index.d.ts",
-  "files": [
-    "lib",
-    "lib-es"
-  ],
+  "files": ["lib", "lib-es"],
   "scripts": {
     "build": "ts-node -T ../../scripts/build-self.ts",
     "postbuild": "eval \"cd ../.. && yarn build:update ${PWD##*/}\"",
@@ -18,9 +15,10 @@
     "unit-test": "echo mocha -r ts-register --recursive test/**/*.test.ts",
     "tsc": "tsc --noEmit -p ./tsconfig.build.json"
   },
+  "externalModules": ["@jshow/logger"],
   "dependencies": {
     "@jshow/logger": "^1.0.1",
-    "@jshow/nest-common": "^1.0.1",
+    "@jshow/nest-common": "^1.0.2",
     "@nestjs/common": "^8.4.7",
     "chalk": "^5.0.1",
     "debug": "^4.3.4",
