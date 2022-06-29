@@ -151,18 +151,6 @@ export function resolveTopologicalSorting(map: ReadonlyMap<string, ReadonlySet<s
   return resolveTopologicalSortingInternal(clonePackageDeps(map));
 }
 
-export function filterTopologicalSorting(map: Map<string, Set<string>>) {
-  for (const [packageName, deps] of map) {
-    if (!deps.size) continue;
-    const _deps = new Set<string>();
-    for (const name of deps) {
-      if (!map.has(name)) continue;
-      _deps.add(name);
-    }
-    map.set(packageName, _deps);
-  }
-}
-
 function* resolveTopologicalSortingInternal(map: Map<string, Set<string>>) {
   // 简陋版循环引用报错用
   const MAX_LOOP_COUNT = 100;

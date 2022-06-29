@@ -15,6 +15,7 @@
     "unit-test": "echo mocha -r ts-register --recursive test/**/*.test.ts",
     "tsc": "tsc --noEmit -p ./tsconfig.build.json"
   },
+  "externalModules": ["@jshow/logger"],
   "dependencies": {
     "@jshow/logger": "^1.0.1",
     "@jshow/nest-common": "^{nest-common}",

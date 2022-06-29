@@ -11,7 +11,6 @@ import yargs from 'yargs';
 
 import {
   cacheFullPath,
-  filterTopologicalSorting,
   packagesFullPath,
   readPackageCache,
   readPackageJson,
@@ -142,8 +141,6 @@ async function main(options: MainOptions) {
   );
 
   if (!packageDeps.size) return;
-
-  filterTopologicalSorting(packageDeps);
 
   const topologicalSorting = Array.from(resolveTopologicalSorting(packageDeps)).filter((x) => {
     const scripts = packageScripts.get(x) as StringStringMap;
