@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { filter as mmFilter } from 'minimatch';
 import path from 'path';
 
@@ -224,3 +225,25 @@ export async function getPackageYarnInfo<K extends keyof YarnPackageInfoResult>(
 }
 
 type ValuesOf<T> = T[keyof T];
+
+export class Printer {
+  public ok(str: string) {
+    return `${this.getPrefix()} ${chalk.bold(chalk.green(`success`))} ${chalk.magenta(str)}`;
+  }
+
+  public error(str: string) {
+    return `${this.getPrefix()} ${chalk.bgBlack(chalk.red(`ERR!`))} ${chalk.redBright(str)}`;
+  }
+
+  public warn(str: string) {
+    return `${this.getPrefix()} ${chalk.bgBlack(chalk.yellow(`WARN`))} ${chalk.yellowBright(str)}`;
+  }
+
+  public info(str: string) {
+    return `${this.getPrefix()} ${chalk.bgBlack(chalk.cyan(`INFO`))} ${chalk.whiteBright(str)}`;
+  }
+
+  public getPrefix(str = 'RELEASE') {
+    return chalk.bgBlack(chalk.whiteBright(str));
+  }
+}

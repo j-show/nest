@@ -1,7 +1,7 @@
 {
   "name": "@jshow/nest-logger",
   "license": "MIT",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "description": "jShow Nest Logger",
   "main": "lib/index.js",
   "module": "lib-es/index.js",

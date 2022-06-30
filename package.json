@@ -20,7 +20,8 @@
     "build:all": "ts-node -T scripts/build-all",
     "build:update": "ts-node -T scripts/build-update",
     "sync-to-node-modules": "ts-node -T scripts/sync-to-node-modules",
-    "create:pkg": "ts-node -T scripts/create-pkg"
+    "create:pkg": "ts-node -T scripts/create-pkg",
+    "publish:tag": "ts-node -T scripts/publish-tag"
   },
   "devDependencies": {
     "@jshow/logger": "^1.0.1",

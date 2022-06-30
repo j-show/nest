@@ -3,6 +3,7 @@
 import chalk from 'chalk';
 import fs from 'fs';
 import { fromPairs } from 'lodash';
+import moment from 'moment';
 import os from 'os';
 import path from 'path';
 import semver from 'semver';
@@ -31,8 +32,14 @@ import {
   run,
   select,
 } from './helper';
-import { getSuffixByGitFlow } from './release/branch';
-import { getPackageJsonAtCommit, getPackagePublishInfo, getPackageYarnInfo, getPublishInfo } from './release/common';
+import {
+  getPackageJsonAtCommit,
+  getPackagePublishInfo,
+  getPackageYarnInfo,
+  getPublishInfo,
+  getSuffixByGitFlow,
+  Printer,
+} from './release';
 
 type Arguments = yargs.Arguments & {
   readonly noPush?: boolean;
@@ -75,7 +82,7 @@ interface MainOptions {
   readonly packageSuffix?: string;
 }
 
-export async function main(options: MainOptions = {}) {
+async function main(options: MainOptions = {}) {
   const noPush = !!options.noPush;
   const packageSuffix = String(options.packageSuffix || '');
   const printer = new Printer();
@@ -562,6 +569,7 @@ export async function main(options: MainOptions = {}) {
     const beforeCommits: string[] = [];
     const afterCommits: string[] = [];
     const tags: string[] = [];
+
     for (const [packageName, { newVersion }] of publishInfoMap) {
       const packageJsonFullPath = path.join(packagesFullPath, packageName, 'package.json');
       const tag = `${scope}/${packageName}${packageSuffix}@${newVersion}`;
@@ -572,11 +580,19 @@ export async function main(options: MainOptions = {}) {
       afterCommits.push(`git tag ${JSON.stringify(tag)} -m ${JSON.stringify(tag)}`);
     }
     const body = `${message}${os.EOL}${os.EOL}${tags.map((tag) => ` - ${tag}`).join(os.EOL)}`;
-    const beforeCommand = beforeCommits.join(' && ');
+
     let commitCommand = `git commit --allow-empty --no-verify -m "$(echo ${JSON.stringify(body)})"`;
     if (os.platform() === 'linux') {
       commitCommand = `git commit --allow-empty --no-verify -m "$(echo -e ${JSON.stringify(body)})"`;
     }
+
+    const choreReleaseTag = `release@${moment().format('YYYYMMDDHHmmss')}`;
+    if (tags.length > 0) {
+      afterCommits.push(`git tag ${choreReleaseTag} -m "$(echo ${JSON.stringify(body)})"`);
+      tags.push(choreReleaseTag);
+    }
+
+    const beforeCommand = beforeCommits.join(' && ');
     const afterCommand = afterCommits.join(' && ');
     const finalCommand = [beforeCommand, commitCommand, afterCommand].filter(Boolean).join(' && ');
     if (finalCommand) await exec(finalCommand, { silent: true });
@@ -607,28 +623,6 @@ export async function main(options: MainOptions = {}) {
 interface Dependency {
   key: typeof dependencyKeys[number];
   range: string;
-}
-
-class Printer {
-  public ok(str: string) {
-    return `${this.getPrefix()} ${chalk.bold(chalk.green(`success`))} ${chalk.magenta(str)}`;
-  }
-
-  public error(str: string) {
-    return `${this.getPrefix()} ${chalk.bgBlack(chalk.red(`ERR!`))} ${chalk.redBright(str)}`;
-  }
-
-  public warn(str: string) {
-    return `${this.getPrefix()} ${chalk.bgBlack(chalk.yellow(`WARN`))} ${chalk.yellowBright(str)}`;
-  }
-
-  public info(str: string) {
-    return `${this.getPrefix()} ${chalk.bgBlack(chalk.cyan(`INFO`))} ${chalk.whiteBright(str)}`;
-  }
-
-  public getPrefix(str = 'RELEASE') {
-    return chalk.bgBlack(chalk.whiteBright(str));
-  }
 }
 
 function askForValidRangeByVersion(version: string) {

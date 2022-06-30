@@ -1,7 +1,7 @@
 {
   "name": "@jshow/nest-console",
   "license": "MIT",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "description": "jShow Nest Console for Next.js",
   "main": "lib/index.js",
   "module": "lib-es/index.js",
