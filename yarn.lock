@@ -840,13 +840,6 @@
   resolved "https://registry.npmjs.org/@types/prettyjson/-/prettyjson-0.0.30.tgz#6d948dd2d3e50c0aac0571dd3e9d712c04517d26"
   integrity sha512-BQ15wnnSvzlvDAVvd4t+zXjd9o6QAcfBeEUlZcinDYeb0A1xTfRBc0s8nxHlctojnsxDrbiG7amTqLWbXsiK7Q==
 
-"@types/readdir-enhanced@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.npmjs.org/@types/readdir-enhanced/-/readdir-enhanced-3.0.2.tgz#d5677b48db96fbe6c992854fdccd8b90585968d0"
-  integrity sha512-AArD6Q/Ede5YOsu6PpptWu3mG1Q1w6ORbYe2IKfDyaS8jtt0qzQkdihPZG8pg0tgYDXD6JRYPYiEjKo0rAGIog==
-  dependencies:
-    readdir-enhanced "*"
-
 "@types/rimraf@^3.0.2":
   version "3.0.2"
   resolved "https://registry.npmjs.org/@types/rimraf/-/rimraf-3.0.2.tgz#a63d175b331748e5220ad48c901d7bbf1f44eef8"
@@ -3798,7 +3791,7 @@ react-is@^18.0.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-readdir-enhanced@*, readdir-enhanced@^6.0.4:
+readdir-enhanced@^6.0.4:
   version "6.0.4"
   resolved "https://registry.npmjs.org/readdir-enhanced/-/readdir-enhanced-6.0.4.tgz#71186776390bd1cf33b7c1451924ffaced7db184"
   integrity sha512-MWY048D/nEpHwqdnsBiUxpqjJPkEw2i2RmY5gM2Gadn0rkHS/DhUBqrYTkOqKHF4RoUlYZZ8GnP4ymlRGuo30A==

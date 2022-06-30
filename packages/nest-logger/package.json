@@ -1,7 +1,7 @@
 {
   "name": "@jshow/nest-logger",
   "license": "MIT",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "description": "jShow Nest Logger",
   "main": "lib/index.js",
   "module": "lib-es/index.js",
@@ -18,7 +18,7 @@
   "externalModules": ["@jshow/logger"],
   "dependencies": {
     "@jshow/logger": "^1.0.1",
-    "@jshow/nest-common": "^1.0.2",
+    "@jshow/nest-common": "^1.0.1",
     "@nestjs/common": "^8.4.7",
     "chalk": "^5.0.1",
     "debug": "^4.3.4",

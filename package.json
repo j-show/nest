@@ -20,7 +20,8 @@
     "build:all": "ts-node -T scripts/build-all",
     "build:update": "ts-node -T scripts/build-update",
     "sync-to-node-modules": "ts-node -T scripts/sync-to-node-modules",
-    "create:pkg": "ts-node -T scripts/create-pkg"
+    "create:pkg": "ts-node -T scripts/create-pkg",
+    "publish:tag": "ts-node -T scripts/publish-tag"
   },
   "devDependencies": {
     "@jshow/logger": "^1.0.1",
@@ -30,7 +31,6 @@
     "@types/mkdirp": "^1.0.2",
     "@types/node": "^17.0.33",
     "@types/prettier": "^2.6.1",
-    "@types/readdir-enhanced": "^3.0.2",
     "@types/rimraf": "^3.0.2",
     "@types/semver": "^7.3.10",
     "@types/shelljs": "^0.8.11",

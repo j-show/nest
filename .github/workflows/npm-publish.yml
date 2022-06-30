@@ -1,0 +1,28 @@
+# This is a auto publish to npm workflow
+
+name: Auto publish to npm
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install Dependencies & Build Packages
+        run: npm i && npm run build:all
+
+      - name: Publish Release by tag
+        run: npm run publish:tag "$RELEASE_TAG" 
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

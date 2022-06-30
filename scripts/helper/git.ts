@@ -123,3 +123,8 @@ export function getFileAtCommit(commitHash: string, relativeFilePath: string) {
 export async function getCurrentBranchName() {
   return (await exec(`git rev-parse --abbrev-ref HEAD`, { silent: true })).split(os.EOL).filter(predicate)[0] || '';
 }
+
+export async function getCommitMessage(name: string) {
+  const result = await exec(`git log --pretty=format:"%b" ${name}`, { silent: true });
+  return result.split(os.EOL).filter(predicate);
+}
