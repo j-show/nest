@@ -1,0 +1,31 @@
+{
+  "name": "@jshow/nest-migration",
+  "license": "MIT",
+  "version": "1.0.1",
+  "description": "jShow Nest Migration",
+  "main": "lib/index.js",
+  "module": "lib-es/index.js",
+  "types": "lib/index.d.ts",
+  "files": ["lib", "lib-es"],
+  "scripts": {
+    "build": "ts-node -T ../../scripts/build-self.ts",
+    "postbuild": "eval \"cd ../.. && yarn build:update ${PWD##*/}\"",
+    "lint": "yarn type-coverage  --ignore-catch --at-least 99 -p ./tsconfig.build.json",
+    "test": "yarn lint && yarn tsc && yarn unit-test",
+    "unit-test": "echo mocha -r ts-register --recursive test/**/*.test.ts",
+    "tsc": "tsc --noEmit -p ./tsconfig.build.json"
+  },
+  "externalModules": ["@jshow/logger"],
+  "dependencies": {
+    "@jshow/logger": "^1.0.1",
+    "@jshow/nest-common": "^1.0.1",
+    "@nestjs/common": "^8.4.7",
+    "@nestjs/core": "^8.4.7",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.3",
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.182"
+  }
+}
