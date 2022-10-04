@@ -122,7 +122,7 @@ export class ConsoleService {
           }
         }
         try {
-          const injectable = module.injectables.get(commandClass.name);
+          const injectable = module.injectables.get(commandClass.name) || module.injectables.get(commandClass);
           if (!injectable) {
             throw new Error(`Can not get injectable: ${commandClass.name}`);
           }

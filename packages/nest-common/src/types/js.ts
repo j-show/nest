@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export type Constructor<T> = new (...args: unknown[]) => T;
+export type Constructor<T> = new (...args: any[]) => T;
 export declare type AnyParamConstructor<T> = new (...args: any[]) => T;
 
 export type Unpacked<T> = T extends (infer U)[] ? U : T;

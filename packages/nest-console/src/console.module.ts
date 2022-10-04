@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { MetadataScanner } from '@nestjs/core/metadata-scanner';
+import { MetadataScanner, ModulesContainer } from '@nestjs/core';
 
 import { ConsoleService } from './console.service';
 
 @Module({
-  providers: [MetadataScanner, ConsoleService],
+  providers: [MetadataScanner, ModulesContainer, ConsoleService],
   exports: [ConsoleService],
 })
 export class ConsoleModule {}
